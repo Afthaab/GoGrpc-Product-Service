@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package profile;
+
+option go_package = "./pkg/pb";
+
+service ProductManagement{
+    rpc AddProduct(AddProductRequest) returns (AddProductResponse) {}
+}
+
+message AddProductRequest{
+    string productname = 1;
+    string quantity = 2;
+}
+message AddProductResponse{
+    int64 status = 1;
+    string error =2;
+}
+
+// export PATH="$PATH:$(go env GOPATH)/bin"
+// protoc --go_out=. --go-grpc_out=. pkg/pb/product.proto
