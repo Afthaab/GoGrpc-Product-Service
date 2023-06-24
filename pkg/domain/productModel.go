@@ -1,6 +1,7 @@
 package domain
 
-type Product struct {
-	Name     string `bson:"name" json:"name"`
-	Quantity string `bson:"quantity" json:"quantity"`
+type Size struct {
+	ID    string `bson:"_id,omitempty" json:"id"`
+	Name  string `bson:"name" json:"email"`
+	Price string `bson:"price" json:"size"`
 }

@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProductManagementClient interface {
-	AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*AddProductResponse, error)
+	AddSizeBazedPrize(ctx context.Context, in *AddSizeBazedPrizeRequest, opts ...grpc.CallOption) (*AddSizeBazedPrizeResponse, error)
 }
 
 type productManagementClient struct {
@@ -33,9 +33,9 @@ func NewProductManagementClient(cc grpc.ClientConnInterface) ProductManagementCl
 	return &productManagementClient{cc}
 }
 
-func (c *productManagementClient) AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*AddProductResponse, error) {
-	out := new(AddProductResponse)
-	err := c.cc.Invoke(ctx, "/profile.ProductManagement/AddProduct", in, out, opts...)
+func (c *productManagementClient) AddSizeBazedPrize(ctx context.Context, in *AddSizeBazedPrizeRequest, opts ...grpc.CallOption) (*AddSizeBazedPrizeResponse, error) {
+	out := new(AddSizeBazedPrizeResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/AddSizeBazedPrize", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (c *productManagementClient) AddProduct(ctx context.Context, in *AddProduct
 // All implementations must embed UnimplementedProductManagementServer
 // for forward compatibility
 type ProductManagementServer interface {
-	AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error)
+	AddSizeBazedPrize(context.Context, *AddSizeBazedPrizeRequest) (*AddSizeBazedPrizeResponse, error)
 	mustEmbedUnimplementedProductManagementServer()
 }
 
@@ -54,8 +54,8 @@ type ProductManagementServer interface {
 type UnimplementedProductManagementServer struct {
 }
 
-func (UnimplementedProductManagementServer) AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddProduct not implemented")
+func (UnimplementedProductManagementServer) AddSizeBazedPrize(context.Context, *AddSizeBazedPrizeRequest) (*AddSizeBazedPrizeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddSizeBazedPrize not implemented")
 }
 func (UnimplementedProductManagementServer) mustEmbedUnimplementedProductManagementServer() {}
 
@@ -70,20 +70,20 @@ func RegisterProductManagementServer(s grpc.ServiceRegistrar, srv ProductManagem
 	s.RegisterService(&ProductManagement_ServiceDesc, srv)
 }
 
-func _ProductManagement_AddProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddProductRequest)
+func _ProductManagement_AddSizeBazedPrize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddSizeBazedPrizeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductManagementServer).AddProduct(ctx, in)
+		return srv.(ProductManagementServer).AddSizeBazedPrize(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/profile.ProductManagement/AddProduct",
+		FullMethod: "/products.ProductManagement/AddSizeBazedPrize",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductManagementServer).AddProduct(ctx, req.(*AddProductRequest))
+		return srv.(ProductManagementServer).AddSizeBazedPrize(ctx, req.(*AddSizeBazedPrizeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -92,12 +92,12 @@ func _ProductManagement_AddProduct_Handler(srv interface{}, ctx context.Context,
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ProductManagement_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "profile.ProductManagement",
+	ServiceName: "products.ProductManagement",
 	HandlerType: (*ProductManagementServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "AddProduct",
-			Handler:    _ProductManagement_AddProduct_Handler,
+			MethodName: "AddSizeBazedPrize",
+			Handler:    _ProductManagement_AddSizeBazedPrize_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

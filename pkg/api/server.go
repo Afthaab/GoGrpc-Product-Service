@@ -3,7 +3,6 @@ package api
 import (
 	"log"
 	"net"
-	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/product/pkg/api/handler"
@@ -38,7 +37,7 @@ func NewServerHttp(productHandler *handler.ProductHandler) *ServerHttp {
 
 	engine.Use(gin.Logger())
 
-	go NewGRPCServer(productHandler, os.Getenv("PRODUCT_SVC_PORT"))
+	go NewGRPCServer(productHandler, "8891")
 
 	return &ServerHttp{
 		Engine: engine,

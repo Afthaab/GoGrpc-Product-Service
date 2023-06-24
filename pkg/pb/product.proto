@@ -1,20 +1,21 @@
 syntax = "proto3";
 
-package profile;
+package products;
 
 option go_package = "./pkg/pb";
 
 service ProductManagement{
-    rpc AddProduct(AddProductRequest) returns (AddProductResponse) {}
+    rpc AddSizeBazedPrize(AddSizeBazedPrizeRequest) returns (AddSizeBazedPrizeResponse) {}
 }
 
-message AddProductRequest{
-    string productname = 1;
-    string quantity = 2;
+message AddSizeBazedPrizeRequest{
+    string name = 1;
+    string pricerange = 2;
 }
-message AddProductResponse{
+message AddSizeBazedPrizeResponse{
     int64 status = 1;
-    string error =2;
+    string error = 2;
+    string sizeid = 3;
 }
 
 // export PATH="$PATH:$(go env GOPATH)/bin"
