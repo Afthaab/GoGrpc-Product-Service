@@ -22,7 +22,16 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProductManagementClient interface {
+	AddSizeBazedPrize(ctx context.Context, in *AddSizeBazedPrizeRequest, opts ...grpc.CallOption) (*AddSizeBazedPrizeResponse, error)
+	ViewSizeBasedPrize(ctx context.Context, in *ViewSizeBasedPriceRequest, opts ...grpc.CallOption) (*ViewSizeBasedPriceRespose, error)
+	AddImage(ctx context.Context, in *AddImageRequest, opts ...grpc.CallOption) (*AddImageResponse, error)
+	AddCategories(ctx context.Context, in *AddCategoriesRequest, opts ...grpc.CallOption) (*AddCategoriesResponse, error)
+	ViewCategories(ctx context.Context, in *ViewCategoriesRequest, opts ...grpc.CallOption) (*ViewCategoriesResponse, error)
 	AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*AddProductResponse, error)
+	ViewProduct(ctx context.Context, in *ViewProductRequest, opts ...grpc.CallOption) (*ViewProductResponse, error)
+	AddFoodType(ctx context.Context, in *AddFoodTypeRequest, opts ...grpc.CallOption) (*AddFoodTypeResponse, error)
+	ViewFoodType(ctx context.Context, in *ViewFoodtypeRequest, opts ...grpc.CallOption) (*ViewFoodTypeResponse, error)
+	ViewProductById(ctx context.Context, in *ViewProductByIdRequest, opts ...grpc.CallOption) (*ViewProductByIdResponse, error)
 }
 
 type productManagementClient struct {
@@ -33,9 +42,90 @@ func NewProductManagementClient(cc grpc.ClientConnInterface) ProductManagementCl
 	return &productManagementClient{cc}
 }
 
+func (c *productManagementClient) AddSizeBazedPrize(ctx context.Context, in *AddSizeBazedPrizeRequest, opts ...grpc.CallOption) (*AddSizeBazedPrizeResponse, error) {
+	out := new(AddSizeBazedPrizeResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/AddSizeBazedPrize", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productManagementClient) ViewSizeBasedPrize(ctx context.Context, in *ViewSizeBasedPriceRequest, opts ...grpc.CallOption) (*ViewSizeBasedPriceRespose, error) {
+	out := new(ViewSizeBasedPriceRespose)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/ViewSizeBasedPrize", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productManagementClient) AddImage(ctx context.Context, in *AddImageRequest, opts ...grpc.CallOption) (*AddImageResponse, error) {
+	out := new(AddImageResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/AddImage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productManagementClient) AddCategories(ctx context.Context, in *AddCategoriesRequest, opts ...grpc.CallOption) (*AddCategoriesResponse, error) {
+	out := new(AddCategoriesResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/AddCategories", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productManagementClient) ViewCategories(ctx context.Context, in *ViewCategoriesRequest, opts ...grpc.CallOption) (*ViewCategoriesResponse, error) {
+	out := new(ViewCategoriesResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/ViewCategories", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *productManagementClient) AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*AddProductResponse, error) {
 	out := new(AddProductResponse)
-	err := c.cc.Invoke(ctx, "/profile.ProductManagement/AddProduct", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/AddProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productManagementClient) ViewProduct(ctx context.Context, in *ViewProductRequest, opts ...grpc.CallOption) (*ViewProductResponse, error) {
+	out := new(ViewProductResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/ViewProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productManagementClient) AddFoodType(ctx context.Context, in *AddFoodTypeRequest, opts ...grpc.CallOption) (*AddFoodTypeResponse, error) {
+	out := new(AddFoodTypeResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/AddFoodType", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productManagementClient) ViewFoodType(ctx context.Context, in *ViewFoodtypeRequest, opts ...grpc.CallOption) (*ViewFoodTypeResponse, error) {
+	out := new(ViewFoodTypeResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/ViewFoodType", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productManagementClient) ViewProductById(ctx context.Context, in *ViewProductByIdRequest, opts ...grpc.CallOption) (*ViewProductByIdResponse, error) {
+	out := new(ViewProductByIdResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/ViewProductById", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +136,16 @@ func (c *productManagementClient) AddProduct(ctx context.Context, in *AddProduct
 // All implementations must embed UnimplementedProductManagementServer
 // for forward compatibility
 type ProductManagementServer interface {
+	AddSizeBazedPrize(context.Context, *AddSizeBazedPrizeRequest) (*AddSizeBazedPrizeResponse, error)
+	ViewSizeBasedPrize(context.Context, *ViewSizeBasedPriceRequest) (*ViewSizeBasedPriceRespose, error)
+	AddImage(context.Context, *AddImageRequest) (*AddImageResponse, error)
+	AddCategories(context.Context, *AddCategoriesRequest) (*AddCategoriesResponse, error)
+	ViewCategories(context.Context, *ViewCategoriesRequest) (*ViewCategoriesResponse, error)
 	AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error)
+	ViewProduct(context.Context, *ViewProductRequest) (*ViewProductResponse, error)
+	AddFoodType(context.Context, *AddFoodTypeRequest) (*AddFoodTypeResponse, error)
+	ViewFoodType(context.Context, *ViewFoodtypeRequest) (*ViewFoodTypeResponse, error)
+	ViewProductById(context.Context, *ViewProductByIdRequest) (*ViewProductByIdResponse, error)
 	mustEmbedUnimplementedProductManagementServer()
 }
 
@@ -54,8 +153,35 @@ type ProductManagementServer interface {
 type UnimplementedProductManagementServer struct {
 }
 
+func (UnimplementedProductManagementServer) AddSizeBazedPrize(context.Context, *AddSizeBazedPrizeRequest) (*AddSizeBazedPrizeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddSizeBazedPrize not implemented")
+}
+func (UnimplementedProductManagementServer) ViewSizeBasedPrize(context.Context, *ViewSizeBasedPriceRequest) (*ViewSizeBasedPriceRespose, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ViewSizeBasedPrize not implemented")
+}
+func (UnimplementedProductManagementServer) AddImage(context.Context, *AddImageRequest) (*AddImageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddImage not implemented")
+}
+func (UnimplementedProductManagementServer) AddCategories(context.Context, *AddCategoriesRequest) (*AddCategoriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddCategories not implemented")
+}
+func (UnimplementedProductManagementServer) ViewCategories(context.Context, *ViewCategoriesRequest) (*ViewCategoriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ViewCategories not implemented")
+}
 func (UnimplementedProductManagementServer) AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddProduct not implemented")
+}
+func (UnimplementedProductManagementServer) ViewProduct(context.Context, *ViewProductRequest) (*ViewProductResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ViewProduct not implemented")
+}
+func (UnimplementedProductManagementServer) AddFoodType(context.Context, *AddFoodTypeRequest) (*AddFoodTypeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddFoodType not implemented")
+}
+func (UnimplementedProductManagementServer) ViewFoodType(context.Context, *ViewFoodtypeRequest) (*ViewFoodTypeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ViewFoodType not implemented")
+}
+func (UnimplementedProductManagementServer) ViewProductById(context.Context, *ViewProductByIdRequest) (*ViewProductByIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ViewProductById not implemented")
 }
 func (UnimplementedProductManagementServer) mustEmbedUnimplementedProductManagementServer() {}
 
@@ -70,6 +196,96 @@ func RegisterProductManagementServer(s grpc.ServiceRegistrar, srv ProductManagem
 	s.RegisterService(&ProductManagement_ServiceDesc, srv)
 }
 
+func _ProductManagement_AddSizeBazedPrize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddSizeBazedPrizeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).AddSizeBazedPrize(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/AddSizeBazedPrize",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).AddSizeBazedPrize(ctx, req.(*AddSizeBazedPrizeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductManagement_ViewSizeBasedPrize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewSizeBasedPriceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).ViewSizeBasedPrize(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/ViewSizeBasedPrize",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).ViewSizeBasedPrize(ctx, req.(*ViewSizeBasedPriceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductManagement_AddImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).AddImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/AddImage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).AddImage(ctx, req.(*AddImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductManagement_AddCategories_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddCategoriesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).AddCategories(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/AddCategories",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).AddCategories(ctx, req.(*AddCategoriesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductManagement_ViewCategories_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewCategoriesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).ViewCategories(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/ViewCategories",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).ViewCategories(ctx, req.(*ViewCategoriesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ProductManagement_AddProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddProductRequest)
 	if err := dec(in); err != nil {
@@ -80,10 +296,82 @@ func _ProductManagement_AddProduct_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/profile.ProductManagement/AddProduct",
+		FullMethod: "/products.ProductManagement/AddProduct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ProductManagementServer).AddProduct(ctx, req.(*AddProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductManagement_ViewProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).ViewProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/ViewProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).ViewProduct(ctx, req.(*ViewProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductManagement_AddFoodType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddFoodTypeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).AddFoodType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/AddFoodType",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).AddFoodType(ctx, req.(*AddFoodTypeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductManagement_ViewFoodType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewFoodtypeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).ViewFoodType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/ViewFoodType",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).ViewFoodType(ctx, req.(*ViewFoodtypeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductManagement_ViewProductById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewProductByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).ViewProductById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/ViewProductById",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).ViewProductById(ctx, req.(*ViewProductByIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -92,12 +380,48 @@ func _ProductManagement_AddProduct_Handler(srv interface{}, ctx context.Context,
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ProductManagement_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "profile.ProductManagement",
+	ServiceName: "products.ProductManagement",
 	HandlerType: (*ProductManagementServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "AddSizeBazedPrize",
+			Handler:    _ProductManagement_AddSizeBazedPrize_Handler,
+		},
+		{
+			MethodName: "ViewSizeBasedPrize",
+			Handler:    _ProductManagement_ViewSizeBasedPrize_Handler,
+		},
+		{
+			MethodName: "AddImage",
+			Handler:    _ProductManagement_AddImage_Handler,
+		},
+		{
+			MethodName: "AddCategories",
+			Handler:    _ProductManagement_AddCategories_Handler,
+		},
+		{
+			MethodName: "ViewCategories",
+			Handler:    _ProductManagement_ViewCategories_Handler,
+		},
+		{
 			MethodName: "AddProduct",
 			Handler:    _ProductManagement_AddProduct_Handler,
+		},
+		{
+			MethodName: "ViewProduct",
+			Handler:    _ProductManagement_ViewProduct_Handler,
+		},
+		{
+			MethodName: "AddFoodType",
+			Handler:    _ProductManagement_AddFoodType_Handler,
+		},
+		{
+			MethodName: "ViewFoodType",
+			Handler:    _ProductManagement_ViewFoodType_Handler,
+		},
+		{
+			MethodName: "ViewProductById",
+			Handler:    _ProductManagement_ViewProductById_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
