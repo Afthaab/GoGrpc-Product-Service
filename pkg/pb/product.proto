@@ -6,17 +6,125 @@ option go_package = "./pkg/pb";
 
 service ProductManagement{
     rpc AddSizeBazedPrize(AddSizeBazedPrizeRequest) returns (AddSizeBazedPrizeResponse) {}
+    rpc ViewSizeBasedPrize(ViewSizeBasedPriceRequest) returns (ViewSizeBasedPriceRespose){}
+
+    rpc AddImage(AddImageRequest) returns (AddImageResponse) {}
+
+    rpc AddCategories(AddCategoriesRequest) returns (AddCategoriesResponse) {}
+    rpc ViewCategories(ViewCategoriesRequest) returns (ViewCategoriesResponse) {}
+
+    rpc AddProduct(AddProductRequest) returns (AddProductResponse) {}
+    rpc ViewProduct (ViewProductRequest) returns (ViewProductResponse) {}
+
+    rpc AddFoodType (AddFoodTypeRequest) returns (AddFoodTypeResponse) {}
+    rpc ViewFoodType (ViewFoodtypeRequest) returns (ViewFoodTypeResponse) {}
+
+    rpc ViewProductById (ViewProductByIdRequest) returns (ViewProductByIdResponse) {}
+}
+
+// pending
+message ViewProductByIdRequest{
+    string pid = 1;
+}
+message ViewProductByIdResponse{
+    int64 status = 1;
+    string error = 2; 
+    string pid = 3;
+    string name = 4;
+    string calories = 5;
+    bool availibilty = 6;
+    string categoryname = 7;
+    string typename  = 8;
+    repeated AddSizeBazedPrizeRequest sizeandprice = 9;
+    repeated string imagelink = 10;
+}
+
+message ViewFoodtypeRequest{}
+message ViewFoodTypeResponse{
+    int64 status = 1;
+    string error = 2;
+    repeated AddFoodTypeRequest foodtypes = 3;
+}
+
+message AddFoodTypeRequest{
+    string typeid = 1;
+    string name = 2;
+    string imageurl = 3;
+}
+message AddFoodTypeResponse{
+    int64 status = 1;
+    string error = 2;
+    string typeid = 3;
+}
+
+message AddImageRequest{
+    bytes image_data = 1;
+}
+
+message AddImageResponse{
+    int64 status = 1;
+    string error = 2;
+    string imageurl = 3;
 }
 
 message AddSizeBazedPrizeRequest{
-    string name = 1;
-    string pricerange = 2;
+    string sizeid = 1;
+    string name = 2;
+    string pricerange = 3;
 }
 message AddSizeBazedPrizeResponse{
     int64 status = 1;
     string error = 2;
-    string sizeid = 3;
+    string sizeid = 3;    
+}
+message AddCategoriesRequest{
+    string categgoryName = 1;
+    string imageurl = 2;
+    string id = 3;
+}
+message AddCategoriesResponse{
+    int64 status = 1;
+    string error = 2;
+    string categoryid = 3;
+}
+message AddProductRequest{
+    string id = 1;
+    string name = 2;
+    string calories = 3;
+    bool availibilty = 4;
+    string categoryid = 5;
+    string typeid  = 6;
+    float baseprice = 7;
+    repeated string sizeid = 8;
+    repeated string imagelink = 9;
+}
+message AddProductResponse{
+    int64 status = 1;
+    string error = 2;
+    string productid = 3;
+}
+message ViewSizeBasedPriceRequest{}
+
+message ViewSizeBasedPriceRespose{
+    int64 status = 1;
+    string error = 2;
+    repeated AddSizeBazedPrizeRequest sizes = 3;
 }
 
+message ViewCategoriesRequest{}
+
+message ViewCategoriesResponse{
+    int64 status = 1;
+    string error = 2;
+    repeated AddCategoriesRequest categories = 3;
+}
+
+message ViewProductRequest{}
+
+message ViewProductResponse{
+    int64 status = 1;
+    string error = 2;
+    repeated AddProductRequest products = 3;
+}
 // export PATH="$PATH:$(go env GOPATH)/bin"
 // protoc --go_out=. --go-grpc_out=. pkg/pb/product.proto

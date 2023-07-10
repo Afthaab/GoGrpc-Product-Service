@@ -36,10 +36,10 @@ func ConnectToDatabase(cfg config.Config) (*mongo.Database, error) {
 		return nil, fmt.Errorf("failed to list collection names: %v", err)
 	}
 
-	if !utility.Contains(collectionNames, "product") {
-		err = databseConn.CreateCollection(ctx, "product")
+	if !utility.Contains(collectionNames, "category") {
+		err = databseConn.CreateCollection(ctx, "category")
 		if err != nil {
-			return nil, fmt.Errorf("failed to create 'product' collection: %v", err)
+			return nil, fmt.Errorf("failed to create 'category' collection: %v", err)
 		}
 	}
 
@@ -47,6 +47,18 @@ func ConnectToDatabase(cfg config.Config) (*mongo.Database, error) {
 		err = databseConn.CreateCollection(ctx, "size")
 		if err != nil {
 			return nil, fmt.Errorf("failed to create 'size' collection: %v", err)
+		}
+	}
+	if !utility.Contains(collectionNames, "products") {
+		err = databseConn.CreateCollection(ctx, "products")
+		if err != nil {
+			return nil, fmt.Errorf("failed to create 'products' collection: %v", err)
+		}
+	}
+	if !utility.Contains(collectionNames, "foodtype") {
+		err = databseConn.CreateCollection(ctx, "foodtype")
+		if err != nil {
+			return nil, fmt.Errorf("failed to create 'foodtype' collection: %v", err)
 		}
 	}
 	fmt.Println("Pinged your deployment. You successfully connected to MongoDB!")
