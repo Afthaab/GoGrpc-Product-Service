@@ -7,22 +7,99 @@ option go_package = "./pkg/pb";
 service ProductManagement{
     rpc AddSizeBazedPrize(AddSizeBazedPrizeRequest) returns (AddSizeBazedPrizeResponse) {}
     rpc ViewSizeBasedPrize(ViewSizeBasedPriceRequest) returns (ViewSizeBasedPriceRespose){}
+    rpc EditSizeBasedPrize(EditSizeBasedPrizeRequest) returns (EditSizeBasedPrizeResponse) {}
+    rpc DeleteSizeBasedPrize(DeleteSizeBasedPrizeRequest) returns (DeleteSizeBasedPrizeResponse) {}
 
     rpc AddImage(AddImageRequest) returns (AddImageResponse) {}
 
     rpc AddCategories(AddCategoriesRequest) returns (AddCategoriesResponse) {}
     rpc ViewCategories(ViewCategoriesRequest) returns (ViewCategoriesResponse) {}
+    rpc ViewCategoryById(ViewCategoryByIdRequest) returns (ViewCategoryByIdResponse) {}
+    rpc EditCategory(EditCategoryRequest) returns (EditCategoryResponse) {}
+    rpc DeleteCategory(DeleteCategoryRequets) returns (DeleteCategoryResponse) {}
 
     rpc AddProduct(AddProductRequest) returns (AddProductResponse) {}
     rpc ViewProduct (ViewProductRequest) returns (ViewProductResponse) {}
+    rpc ViewProductById (ViewProductByIdRequest) returns (ViewProductByIdResponse) {}
 
     rpc AddFoodType (AddFoodTypeRequest) returns (AddFoodTypeResponse) {}
     rpc ViewFoodType (ViewFoodtypeRequest) returns (ViewFoodTypeResponse) {}
-
-    rpc ViewProductById (ViewProductByIdRequest) returns (ViewProductByIdResponse) {}
+    rpc EditFoodType (EditFoodTypeRequest) returns (EditFoodTypeResponse) {}
+    rpc DeleteFoodType (DeleteFoodTypeRequest) returns (DeleteFoodTypeResponse) {}
 }
 
-// pending
+message DeleteFoodTypeRequest{
+    string typeid = 1;
+}
+
+message DeleteFoodTypeResponse{
+    int64 status = 1;
+    string error = 2;
+}
+
+
+message DeleteCategoryRequets{
+    string categoryid = 1;
+}
+
+message DeleteCategoryResponse{
+    int64 status = 1;
+    string error = 2;
+}
+
+message DeleteSizeBasedPrizeRequest{
+    string sizeid = 1;
+}
+
+message DeleteSizeBasedPrizeResponse{
+    int64 status = 1;
+    string error = 2;
+}
+
+message EditSizeBasedPrizeRequest{
+    string sizeid = 1;
+    string sizename = 2;
+    string pricerange = 3;
+}
+message EditSizeBasedPrizeResponse{
+    int64 status = 1;
+    string error = 2;
+}
+
+message EditFoodTypeRequest{
+    string typeid = 1;
+    string typename = 2;
+    string imageurl = 3;
+}
+
+message EditFoodTypeResponse{
+    int64 status = 1;
+    string error = 2;
+}
+
+message EditCategoryRequest{
+    string categoryid = 1;
+    string categoryname = 2;
+    string imageurl = 3;
+}
+
+message EditCategoryResponse{
+    int64 status = 1;
+    string error = 2;
+}
+
+message ViewCategoryByIdRequest{
+    string categoryid = 1;
+}
+
+message ViewCategoryByIdResponse{
+    string categoryid = 1;
+    string categgoryname = 2;
+    string imageurl = 3;
+    int64 status = 4;
+    string error = 5;
+}
+
 message ViewProductByIdRequest{
     string pid = 1;
 }
@@ -126,5 +203,6 @@ message ViewProductResponse{
     string error = 2;
     repeated AddProductRequest products = 3;
 }
+
 // export PATH="$PATH:$(go env GOPATH)/bin"
 // protoc --go_out=. --go-grpc_out=. pkg/pb/product.proto

@@ -24,14 +24,21 @@ const _ = grpc.SupportPackageIsVersion7
 type ProductManagementClient interface {
 	AddSizeBazedPrize(ctx context.Context, in *AddSizeBazedPrizeRequest, opts ...grpc.CallOption) (*AddSizeBazedPrizeResponse, error)
 	ViewSizeBasedPrize(ctx context.Context, in *ViewSizeBasedPriceRequest, opts ...grpc.CallOption) (*ViewSizeBasedPriceRespose, error)
+	EditSizeBasedPrize(ctx context.Context, in *EditSizeBasedPrizeRequest, opts ...grpc.CallOption) (*EditSizeBasedPrizeResponse, error)
+	DeleteSizeBasedPrize(ctx context.Context, in *DeleteSizeBasedPrizeRequest, opts ...grpc.CallOption) (*DeleteSizeBasedPrizeResponse, error)
 	AddImage(ctx context.Context, in *AddImageRequest, opts ...grpc.CallOption) (*AddImageResponse, error)
 	AddCategories(ctx context.Context, in *AddCategoriesRequest, opts ...grpc.CallOption) (*AddCategoriesResponse, error)
 	ViewCategories(ctx context.Context, in *ViewCategoriesRequest, opts ...grpc.CallOption) (*ViewCategoriesResponse, error)
+	ViewCategoryById(ctx context.Context, in *ViewCategoryByIdRequest, opts ...grpc.CallOption) (*ViewCategoryByIdResponse, error)
+	EditCategory(ctx context.Context, in *EditCategoryRequest, opts ...grpc.CallOption) (*EditCategoryResponse, error)
+	DeleteCategory(ctx context.Context, in *DeleteCategoryRequets, opts ...grpc.CallOption) (*DeleteCategoryResponse, error)
 	AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*AddProductResponse, error)
 	ViewProduct(ctx context.Context, in *ViewProductRequest, opts ...grpc.CallOption) (*ViewProductResponse, error)
+	ViewProductById(ctx context.Context, in *ViewProductByIdRequest, opts ...grpc.CallOption) (*ViewProductByIdResponse, error)
 	AddFoodType(ctx context.Context, in *AddFoodTypeRequest, opts ...grpc.CallOption) (*AddFoodTypeResponse, error)
 	ViewFoodType(ctx context.Context, in *ViewFoodtypeRequest, opts ...grpc.CallOption) (*ViewFoodTypeResponse, error)
-	ViewProductById(ctx context.Context, in *ViewProductByIdRequest, opts ...grpc.CallOption) (*ViewProductByIdResponse, error)
+	EditFoodType(ctx context.Context, in *EditFoodTypeRequest, opts ...grpc.CallOption) (*EditFoodTypeResponse, error)
+	DeleteFoodType(ctx context.Context, in *DeleteFoodTypeRequest, opts ...grpc.CallOption) (*DeleteFoodTypeResponse, error)
 }
 
 type productManagementClient struct {
@@ -54,6 +61,24 @@ func (c *productManagementClient) AddSizeBazedPrize(ctx context.Context, in *Add
 func (c *productManagementClient) ViewSizeBasedPrize(ctx context.Context, in *ViewSizeBasedPriceRequest, opts ...grpc.CallOption) (*ViewSizeBasedPriceRespose, error) {
 	out := new(ViewSizeBasedPriceRespose)
 	err := c.cc.Invoke(ctx, "/products.ProductManagement/ViewSizeBasedPrize", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productManagementClient) EditSizeBasedPrize(ctx context.Context, in *EditSizeBasedPrizeRequest, opts ...grpc.CallOption) (*EditSizeBasedPrizeResponse, error) {
+	out := new(EditSizeBasedPrizeResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/EditSizeBasedPrize", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productManagementClient) DeleteSizeBasedPrize(ctx context.Context, in *DeleteSizeBasedPrizeRequest, opts ...grpc.CallOption) (*DeleteSizeBasedPrizeResponse, error) {
+	out := new(DeleteSizeBasedPrizeResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/DeleteSizeBasedPrize", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -87,6 +112,33 @@ func (c *productManagementClient) ViewCategories(ctx context.Context, in *ViewCa
 	return out, nil
 }
 
+func (c *productManagementClient) ViewCategoryById(ctx context.Context, in *ViewCategoryByIdRequest, opts ...grpc.CallOption) (*ViewCategoryByIdResponse, error) {
+	out := new(ViewCategoryByIdResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/ViewCategoryById", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productManagementClient) EditCategory(ctx context.Context, in *EditCategoryRequest, opts ...grpc.CallOption) (*EditCategoryResponse, error) {
+	out := new(EditCategoryResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/EditCategory", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productManagementClient) DeleteCategory(ctx context.Context, in *DeleteCategoryRequets, opts ...grpc.CallOption) (*DeleteCategoryResponse, error) {
+	out := new(DeleteCategoryResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/DeleteCategory", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *productManagementClient) AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*AddProductResponse, error) {
 	out := new(AddProductResponse)
 	err := c.cc.Invoke(ctx, "/products.ProductManagement/AddProduct", in, out, opts...)
@@ -99,6 +151,15 @@ func (c *productManagementClient) AddProduct(ctx context.Context, in *AddProduct
 func (c *productManagementClient) ViewProduct(ctx context.Context, in *ViewProductRequest, opts ...grpc.CallOption) (*ViewProductResponse, error) {
 	out := new(ViewProductResponse)
 	err := c.cc.Invoke(ctx, "/products.ProductManagement/ViewProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productManagementClient) ViewProductById(ctx context.Context, in *ViewProductByIdRequest, opts ...grpc.CallOption) (*ViewProductByIdResponse, error) {
+	out := new(ViewProductByIdResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/ViewProductById", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -123,9 +184,18 @@ func (c *productManagementClient) ViewFoodType(ctx context.Context, in *ViewFood
 	return out, nil
 }
 
-func (c *productManagementClient) ViewProductById(ctx context.Context, in *ViewProductByIdRequest, opts ...grpc.CallOption) (*ViewProductByIdResponse, error) {
-	out := new(ViewProductByIdResponse)
-	err := c.cc.Invoke(ctx, "/products.ProductManagement/ViewProductById", in, out, opts...)
+func (c *productManagementClient) EditFoodType(ctx context.Context, in *EditFoodTypeRequest, opts ...grpc.CallOption) (*EditFoodTypeResponse, error) {
+	out := new(EditFoodTypeResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/EditFoodType", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productManagementClient) DeleteFoodType(ctx context.Context, in *DeleteFoodTypeRequest, opts ...grpc.CallOption) (*DeleteFoodTypeResponse, error) {
+	out := new(DeleteFoodTypeResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/DeleteFoodType", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -138,14 +208,21 @@ func (c *productManagementClient) ViewProductById(ctx context.Context, in *ViewP
 type ProductManagementServer interface {
 	AddSizeBazedPrize(context.Context, *AddSizeBazedPrizeRequest) (*AddSizeBazedPrizeResponse, error)
 	ViewSizeBasedPrize(context.Context, *ViewSizeBasedPriceRequest) (*ViewSizeBasedPriceRespose, error)
+	EditSizeBasedPrize(context.Context, *EditSizeBasedPrizeRequest) (*EditSizeBasedPrizeResponse, error)
+	DeleteSizeBasedPrize(context.Context, *DeleteSizeBasedPrizeRequest) (*DeleteSizeBasedPrizeResponse, error)
 	AddImage(context.Context, *AddImageRequest) (*AddImageResponse, error)
 	AddCategories(context.Context, *AddCategoriesRequest) (*AddCategoriesResponse, error)
 	ViewCategories(context.Context, *ViewCategoriesRequest) (*ViewCategoriesResponse, error)
+	ViewCategoryById(context.Context, *ViewCategoryByIdRequest) (*ViewCategoryByIdResponse, error)
+	EditCategory(context.Context, *EditCategoryRequest) (*EditCategoryResponse, error)
+	DeleteCategory(context.Context, *DeleteCategoryRequets) (*DeleteCategoryResponse, error)
 	AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error)
 	ViewProduct(context.Context, *ViewProductRequest) (*ViewProductResponse, error)
+	ViewProductById(context.Context, *ViewProductByIdRequest) (*ViewProductByIdResponse, error)
 	AddFoodType(context.Context, *AddFoodTypeRequest) (*AddFoodTypeResponse, error)
 	ViewFoodType(context.Context, *ViewFoodtypeRequest) (*ViewFoodTypeResponse, error)
-	ViewProductById(context.Context, *ViewProductByIdRequest) (*ViewProductByIdResponse, error)
+	EditFoodType(context.Context, *EditFoodTypeRequest) (*EditFoodTypeResponse, error)
+	DeleteFoodType(context.Context, *DeleteFoodTypeRequest) (*DeleteFoodTypeResponse, error)
 	mustEmbedUnimplementedProductManagementServer()
 }
 
@@ -159,6 +236,12 @@ func (UnimplementedProductManagementServer) AddSizeBazedPrize(context.Context, *
 func (UnimplementedProductManagementServer) ViewSizeBasedPrize(context.Context, *ViewSizeBasedPriceRequest) (*ViewSizeBasedPriceRespose, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ViewSizeBasedPrize not implemented")
 }
+func (UnimplementedProductManagementServer) EditSizeBasedPrize(context.Context, *EditSizeBasedPrizeRequest) (*EditSizeBasedPrizeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditSizeBasedPrize not implemented")
+}
+func (UnimplementedProductManagementServer) DeleteSizeBasedPrize(context.Context, *DeleteSizeBasedPrizeRequest) (*DeleteSizeBasedPrizeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSizeBasedPrize not implemented")
+}
 func (UnimplementedProductManagementServer) AddImage(context.Context, *AddImageRequest) (*AddImageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddImage not implemented")
 }
@@ -168,11 +251,23 @@ func (UnimplementedProductManagementServer) AddCategories(context.Context, *AddC
 func (UnimplementedProductManagementServer) ViewCategories(context.Context, *ViewCategoriesRequest) (*ViewCategoriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ViewCategories not implemented")
 }
+func (UnimplementedProductManagementServer) ViewCategoryById(context.Context, *ViewCategoryByIdRequest) (*ViewCategoryByIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ViewCategoryById not implemented")
+}
+func (UnimplementedProductManagementServer) EditCategory(context.Context, *EditCategoryRequest) (*EditCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditCategory not implemented")
+}
+func (UnimplementedProductManagementServer) DeleteCategory(context.Context, *DeleteCategoryRequets) (*DeleteCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCategory not implemented")
+}
 func (UnimplementedProductManagementServer) AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddProduct not implemented")
 }
 func (UnimplementedProductManagementServer) ViewProduct(context.Context, *ViewProductRequest) (*ViewProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ViewProduct not implemented")
+}
+func (UnimplementedProductManagementServer) ViewProductById(context.Context, *ViewProductByIdRequest) (*ViewProductByIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ViewProductById not implemented")
 }
 func (UnimplementedProductManagementServer) AddFoodType(context.Context, *AddFoodTypeRequest) (*AddFoodTypeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddFoodType not implemented")
@@ -180,8 +275,11 @@ func (UnimplementedProductManagementServer) AddFoodType(context.Context, *AddFoo
 func (UnimplementedProductManagementServer) ViewFoodType(context.Context, *ViewFoodtypeRequest) (*ViewFoodTypeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ViewFoodType not implemented")
 }
-func (UnimplementedProductManagementServer) ViewProductById(context.Context, *ViewProductByIdRequest) (*ViewProductByIdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ViewProductById not implemented")
+func (UnimplementedProductManagementServer) EditFoodType(context.Context, *EditFoodTypeRequest) (*EditFoodTypeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditFoodType not implemented")
+}
+func (UnimplementedProductManagementServer) DeleteFoodType(context.Context, *DeleteFoodTypeRequest) (*DeleteFoodTypeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteFoodType not implemented")
 }
 func (UnimplementedProductManagementServer) mustEmbedUnimplementedProductManagementServer() {}
 
@@ -228,6 +326,42 @@ func _ProductManagement_ViewSizeBasedPrize_Handler(srv interface{}, ctx context.
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ProductManagementServer).ViewSizeBasedPrize(ctx, req.(*ViewSizeBasedPriceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductManagement_EditSizeBasedPrize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditSizeBasedPrizeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).EditSizeBasedPrize(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/EditSizeBasedPrize",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).EditSizeBasedPrize(ctx, req.(*EditSizeBasedPrizeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductManagement_DeleteSizeBasedPrize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteSizeBasedPrizeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).DeleteSizeBasedPrize(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/DeleteSizeBasedPrize",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).DeleteSizeBasedPrize(ctx, req.(*DeleteSizeBasedPrizeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -286,6 +420,60 @@ func _ProductManagement_ViewCategories_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ProductManagement_ViewCategoryById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewCategoryByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).ViewCategoryById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/ViewCategoryById",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).ViewCategoryById(ctx, req.(*ViewCategoryByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductManagement_EditCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditCategoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).EditCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/EditCategory",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).EditCategory(ctx, req.(*EditCategoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductManagement_DeleteCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCategoryRequets)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).DeleteCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/DeleteCategory",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).DeleteCategory(ctx, req.(*DeleteCategoryRequets))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ProductManagement_AddProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddProductRequest)
 	if err := dec(in); err != nil {
@@ -318,6 +506,24 @@ func _ProductManagement_ViewProduct_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ProductManagementServer).ViewProduct(ctx, req.(*ViewProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductManagement_ViewProductById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewProductByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).ViewProductById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/ViewProductById",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).ViewProductById(ctx, req.(*ViewProductByIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -358,20 +564,38 @@ func _ProductManagement_ViewFoodType_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProductManagement_ViewProductById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ViewProductByIdRequest)
+func _ProductManagement_EditFoodType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditFoodTypeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductManagementServer).ViewProductById(ctx, in)
+		return srv.(ProductManagementServer).EditFoodType(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/products.ProductManagement/ViewProductById",
+		FullMethod: "/products.ProductManagement/EditFoodType",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductManagementServer).ViewProductById(ctx, req.(*ViewProductByIdRequest))
+		return srv.(ProductManagementServer).EditFoodType(ctx, req.(*EditFoodTypeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductManagement_DeleteFoodType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteFoodTypeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).DeleteFoodType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/DeleteFoodType",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).DeleteFoodType(ctx, req.(*DeleteFoodTypeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -392,6 +616,14 @@ var ProductManagement_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ProductManagement_ViewSizeBasedPrize_Handler,
 		},
 		{
+			MethodName: "EditSizeBasedPrize",
+			Handler:    _ProductManagement_EditSizeBasedPrize_Handler,
+		},
+		{
+			MethodName: "DeleteSizeBasedPrize",
+			Handler:    _ProductManagement_DeleteSizeBasedPrize_Handler,
+		},
+		{
 			MethodName: "AddImage",
 			Handler:    _ProductManagement_AddImage_Handler,
 		},
@@ -404,12 +636,28 @@ var ProductManagement_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ProductManagement_ViewCategories_Handler,
 		},
 		{
+			MethodName: "ViewCategoryById",
+			Handler:    _ProductManagement_ViewCategoryById_Handler,
+		},
+		{
+			MethodName: "EditCategory",
+			Handler:    _ProductManagement_EditCategory_Handler,
+		},
+		{
+			MethodName: "DeleteCategory",
+			Handler:    _ProductManagement_DeleteCategory_Handler,
+		},
+		{
 			MethodName: "AddProduct",
 			Handler:    _ProductManagement_AddProduct_Handler,
 		},
 		{
 			MethodName: "ViewProduct",
 			Handler:    _ProductManagement_ViewProduct_Handler,
+		},
+		{
+			MethodName: "ViewProductById",
+			Handler:    _ProductManagement_ViewProductById_Handler,
 		},
 		{
 			MethodName: "AddFoodType",
@@ -420,8 +668,12 @@ var ProductManagement_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ProductManagement_ViewFoodType_Handler,
 		},
 		{
-			MethodName: "ViewProductById",
-			Handler:    _ProductManagement_ViewProductById_Handler,
+			MethodName: "EditFoodType",
+			Handler:    _ProductManagement_EditFoodType_Handler,
+		},
+		{
+			MethodName: "DeleteFoodType",
+			Handler:    _ProductManagement_DeleteFoodType_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

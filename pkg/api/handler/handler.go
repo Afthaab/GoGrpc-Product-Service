@@ -3,6 +3,7 @@ package handler
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -160,6 +161,27 @@ func (h *ProductHandler) ViewSizeBasedPrize(ctx context.Context, req *pb.ViewSiz
 			Sizes:  pbSizes,
 		}, nil
 	}
+}
+
+func (h *ProductHandler) EditSizeBasedPrize(ctx context.Context, req *pb.EditSizeBasedPrizeRequest) (*pb.EditSizeBasedPrizeResponse, error) {
+	sizeData := domain.Size{
+		Id:    req.Sizeid,
+		Name:  req.Sizename,
+		Price: req.Pricerange,
+	}
+	err := h.productUsecase.EditSizeBasedPrice(ctx, sizeData)
+	if err != nil {
+		return &pb.EditSizeBasedPrizeResponse{
+			Status: http.StatusBadRequest,
+			Error:  "Could not edit the size",
+		}, err
+	} else {
+		return &pb.EditSizeBasedPrizeResponse{
+			Status: http.StatusOK,
+			Error:  "nil",
+		}, nil
+	}
+
 }
 
 func (h *ProductHandler) ViewCategories(ctx context.Context, req *pb.ViewCategoriesRequest) (*pb.ViewCategoriesResponse, error) {
@@ -320,6 +342,123 @@ func (h *ProductHandler) AddFoodType(ctx context.Context, req *pb.AddFoodTypeReq
 			Status: http.StatusOK,
 			Error:  "nil",
 			Typeid: typeData.Id,
+		}, nil
+	}
+}
+
+func (h *ProductHandler) EditFoodType(ctx context.Context, req *pb.EditFoodTypeRequest) (*pb.EditFoodTypeResponse, error) {
+	typeData := domain.Foodtype{
+		Id:       req.Typeid,
+		Foodtype: req.Typename,
+		Imageurl: req.Imageurl,
+	}
+	err := h.productUsecase.EditFoodType(ctx, typeData)
+	if err != nil {
+		return &pb.EditFoodTypeResponse{
+			Status: http.StatusBadRequest,
+			Error:  "Could not edit the food type",
+		}, err
+	} else {
+		return &pb.EditFoodTypeResponse{
+			Status: http.StatusOK,
+			Error:  "nil",
+		}, nil
+	}
+}
+
+func (h *ProductHandler) ViewCategoryById(ctx context.Context, req *pb.ViewCategoryByIdRequest) (*pb.ViewCategoryByIdResponse, error) {
+	categoryData := domain.Category{
+		Id: req.Categoryid,
+	}
+	categoryData, err := h.productUsecase.ViewCategoryById(ctx, categoryData.Id)
+	if err != nil {
+		return &pb.ViewCategoryByIdResponse{
+			Status: http.StatusNotFound,
+			Error:  "Could not view category by id",
+		}, err
+	} else {
+		return &pb.ViewCategoryByIdResponse{
+			Categoryid:    categoryData.Id,
+			Categgoryname: categoryData.Categoryname,
+			Imageurl:      categoryData.Imageurl,
+			Status:        http.StatusOK,
+			Error:         "nil",
+		}, nil
+	}
+
+}
+
+func (h *ProductHandler) EditCategory(ctx context.Context, req *pb.EditCategoryRequest) (*pb.EditCategoryResponse, error) {
+	categoryData := domain.Category{
+		Id:           req.Categoryid,
+		Categoryname: req.Categoryname,
+		Imageurl:     req.Imageurl,
+	}
+	err := h.productUsecase.EditCategory(ctx, categoryData)
+	if err != nil {
+		return &pb.EditCategoryResponse{
+			Status: http.StatusBadRequest,
+			Error:  "Could not edit the category details",
+		}, err
+	} else {
+		return &pb.EditCategoryResponse{
+			Status: http.StatusOK,
+			Error:  "nil",
+		}, err
+	}
+}
+
+func (h *ProductHandler) DeleteSizeBasedPrize(ctx context.Context, req *pb.DeleteSizeBasedPrizeRequest) (*pb.DeleteSizeBasedPrizeResponse, error) {
+	sizeData := domain.Size{
+		Id: req.Sizeid,
+	}
+	err := h.productUsecase.DeleteSizeBasedPrize(ctx, sizeData)
+	if err != nil {
+		return &pb.DeleteSizeBasedPrizeResponse{
+			Status: http.StatusUnprocessableEntity,
+			Error:  "Could not delete the category details",
+		}, err
+	} else {
+		return &pb.DeleteSizeBasedPrizeResponse{
+			Status: http.StatusOK,
+			Error:  "nil",
+		}, nil
+	}
+}
+
+func (h *ProductHandler) DeleteCategory(ctx context.Context, req *pb.DeleteCategoryRequets) (*pb.DeleteCategoryResponse, error) {
+	categoryData := domain.Category{
+		Id: req.Categoryid,
+	}
+	err := h.productUsecase.DeleteCategory(ctx, categoryData)
+	if err != nil {
+		return &pb.DeleteCategoryResponse{
+			Status: http.StatusUnprocessableEntity,
+			Error:  "Could not delete the category",
+		}, err
+	} else {
+		return &pb.DeleteCategoryResponse{
+			Status: http.StatusOK,
+			Error:  "nil",
+		}, nil
+	}
+}
+
+func (h *ProductHandler) DeleteFoodType(ctx context.Context, req *pb.DeleteFoodTypeRequest) (*pb.DeleteFoodTypeResponse, error) {
+	typeData := domain.Foodtype{
+		Id: req.Typeid,
+	}
+	fmt.Println(typeData.Id, "pppppppppppppppppp")
+	err := h.productUsecase.DeleteFoodType(ctx, typeData)
+	if err != nil {
+		return &pb.DeleteFoodTypeResponse{
+			Status: http.StatusUnprocessableEntity,
+			Error:  "Could not delete the food type",
+		}, err
+	} else {
+		return &pb.DeleteFoodTypeResponse{
+			Status: http.StatusOK,
+			Error:  "nil",
 		}, nil
 	}
 }

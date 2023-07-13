@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"errors"
 	"strconv"
 
 	"github.com/product/pkg/domain"
@@ -118,6 +119,52 @@ func (u *productUseCase) CalculatePrice(ctx context.Context, sizeData []string, 
 	return sliceSizeData, nil
 }
 
+func (u *productUseCase) EditCategory(ctx context.Context, categoryData domain.Category) error {
+	err := u.Repo.EditCategory(ctx, categoryData)
+	if err != nil {
+		return errors.New("Could not update the details")
+	}
+	return nil
+}
+
+func (u *productUseCase) EditFoodType(ctx context.Context, typeData domain.Foodtype) error {
+	err := u.Repo.EditFoodType(ctx, typeData)
+	if err != nil {
+		return errors.New("Could not update the food type")
+	}
+	return nil
+}
+
+func (u *productUseCase) EditSizeBasedPrice(ctx context.Context, sizeData domain.Size) error {
+	err := u.Repo.EditSizeBasePrice(ctx, sizeData)
+	if err != nil {
+		return errors.New("Could not edit the size")
+	}
+	return nil
+}
+func (u *productUseCase) DeleteSizeBasedPrize(ctx context.Context, sizeData domain.Size) error {
+	err := u.Repo.DeleteSizeBasedPrize(ctx, sizeData)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (u *productUseCase) DeleteCategory(ctx context.Context, categoryData domain.Category) error {
+	err := u.Repo.DeleteCategory(ctx, categoryData)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (u *productUseCase) DeleteFoodType(ctx context.Context, typeData domain.Foodtype) error {
+	err := u.Repo.DeleteFoodType(ctx, typeData)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 func NewProductUseCase(repo interfaces.ProductRepository) service.ProductUseCase {
 	return &productUseCase{
 		Repo: repo,
