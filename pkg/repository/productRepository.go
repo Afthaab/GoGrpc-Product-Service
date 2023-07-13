@@ -237,6 +237,111 @@ func (r *userDataBase) ViewTypeById(ctx context.Context, typeid string) (domain.
 
 }
 
+func (r *userDataBase) EditCategory(ctx context.Context, categoryData domain.Category) error {
+	collection := r.DB.Collection("category")
+
+	// string to primitive.ObjectID
+	cid, _ := primitive.ObjectIDFromHex(categoryData.Id)
+
+	// We create filter. If it is unnecessary to sort data for you, you can use bson.M{}
+	filter := bson.M{"_id": cid}
+
+	update := bson.M{
+		"$set": bson.M{
+			"categoryname": categoryData.Categoryname,
+			"imageurl":     categoryData.Imageurl,
+		},
+	}
+
+	_, err := collection.UpdateOne(ctx, filter, update)
+
+	return err
+}
+
+func (r *userDataBase) EditFoodType(ctx context.Context, typeData domain.Foodtype) error {
+	collection := r.DB.Collection("foodtype")
+
+	// string to primitive.ObjectID
+	tid, _ := primitive.ObjectIDFromHex(typeData.Id)
+
+	// We create filter. If it is unnecessary to sort data for you, you can use bson.M{}
+	filter := bson.M{"_id": tid}
+
+	update := bson.M{
+		"$set": bson.M{
+			"foodtype": typeData.Foodtype,
+			"imageurl": typeData.Imageurl,
+		},
+	}
+
+	_, err := collection.UpdateOne(ctx, filter, update)
+
+	return err
+
+}
+
+func (r *userDataBase) EditSizeBasePrice(ctx context.Context, sizeData domain.Size) error {
+	collection := r.DB.Collection("size")
+
+	// string to primitive.ObjectID
+	sid, _ := primitive.ObjectIDFromHex(sizeData.Id)
+
+	// We create ter. If it is unnecessary to sort data for you, you can use bson.M{}
+	filter := bson.M{"_id": sid}
+
+	update := bson.M{
+		"$set": bson.M{
+			"name":  sizeData.Name,
+			"price": sizeData.Price,
+		},
+	}
+
+	_, err := collection.UpdateOne(ctx, filter, update)
+
+	return err
+}
+
+func (r *userDataBase) DeleteSizeBasedPrize(ctx context.Context, sizeData domain.Size) error {
+	collection := r.DB.Collection("size")
+
+	objID, err := primitive.ObjectIDFromHex(sizeData.Id)
+	if err != nil {
+		return err
+	}
+
+	filter := bson.M{"_id": objID}
+
+	_, err = collection.DeleteOne(ctx, filter)
+	return err
+}
+func (r *userDataBase) DeleteCategory(ctx context.Context, categoryData domain.Category) error {
+	collection := r.DB.Collection("category")
+
+	objID, err := primitive.ObjectIDFromHex(categoryData.Id)
+	if err != nil {
+		return err
+	}
+
+	filter := bson.M{"_id": objID}
+
+	_, err = collection.DeleteOne(ctx, filter)
+	return err
+}
+
+func (r *userDataBase) DeleteFoodType(ctx context.Context, typeData domain.Foodtype) error {
+	collection := r.DB.Collection("foodtype")
+
+	objID, err := primitive.ObjectIDFromHex(typeData.Id)
+	if err != nil {
+		return err
+	}
+
+	filter := bson.M{"_id": objID}
+
+	_, err = collection.DeleteOne(ctx, filter)
+	return err
+}
+
 func NewProductRepo(db *mongo.Database) interfaces.ProductRepository {
 	return &userDataBase{
 		DB: db,
