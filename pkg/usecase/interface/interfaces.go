@@ -21,6 +21,7 @@ type ProductUseCase interface {
 	AddProduct(ctx context.Context, productData domain.Products) (domain.Products, error)
 	ViewProducts(ctx context.Context) ([]domain.Products, error)
 	ViewProductById(ctx context.Context, productData domain.Products) (domain.Products, error)
+	DeleteProduct(ctx context.Context, productData domain.Products) error
 
 	CalculatePrice(ctx context.Context, sizeData []string, basePrice float64) ([]domain.Size, error)
 

@@ -3,7 +3,6 @@ package handler
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"net/http"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -448,7 +447,6 @@ func (h *ProductHandler) DeleteFoodType(ctx context.Context, req *pb.DeleteFoodT
 	typeData := domain.Foodtype{
 		Id: req.Typeid,
 	}
-	fmt.Println(typeData.Id, "pppppppppppppppppp")
 	err := h.productUsecase.DeleteFoodType(ctx, typeData)
 	if err != nil {
 		return &pb.DeleteFoodTypeResponse{
@@ -457,6 +455,24 @@ func (h *ProductHandler) DeleteFoodType(ctx context.Context, req *pb.DeleteFoodT
 		}, err
 	} else {
 		return &pb.DeleteFoodTypeResponse{
+			Status: http.StatusOK,
+			Error:  "nil",
+		}, nil
+	}
+}
+
+func (h *ProductHandler) DeleteProduct(ctx context.Context, req *pb.DeleteProductRequest) (*pb.DeleteProductResponse, error) {
+	productData := domain.Products{
+		ID: req.Productid,
+	}
+	err := h.productUsecase.DeleteProduct(ctx, productData)
+	if err != nil {
+		return &pb.DeleteProductResponse{
+			Status: http.StatusUnprocessableEntity,
+			Error:  "Could not delete the product",
+		}, err
+	} else {
+		return &pb.DeleteProductResponse{
 			Status: http.StatusOK,
 			Error:  "nil",
 		}, nil

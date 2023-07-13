@@ -16,6 +16,7 @@ type ProductRepository interface {
 	AddProduct(ctx context.Context, productdata domain.Products) (domain.Products, error)
 	ViewProducts(ctx context.Context) ([]domain.Products, error)
 	ViewProductById(ctx context.Context, productData domain.Products) (domain.Products, error)
+	DeleteProduct(ctx context.Context, productData domain.Products) error
 
 	AddCategory(ctx context.Context, categorydata domain.Category) (domain.Category, error)
 	ViewCategories(ctx context.Context) ([]domain.Category, error)

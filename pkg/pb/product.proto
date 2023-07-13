@@ -21,11 +21,21 @@ service ProductManagement{
     rpc AddProduct(AddProductRequest) returns (AddProductResponse) {}
     rpc ViewProduct (ViewProductRequest) returns (ViewProductResponse) {}
     rpc ViewProductById (ViewProductByIdRequest) returns (ViewProductByIdResponse) {}
+    rpc DeleteProduct (DeleteProductRequest) returns (DeleteProductResponse) {}
 
     rpc AddFoodType (AddFoodTypeRequest) returns (AddFoodTypeResponse) {}
     rpc ViewFoodType (ViewFoodtypeRequest) returns (ViewFoodTypeResponse) {}
     rpc EditFoodType (EditFoodTypeRequest) returns (EditFoodTypeResponse) {}
     rpc DeleteFoodType (DeleteFoodTypeRequest) returns (DeleteFoodTypeResponse) {}
+}
+
+message DeleteProductRequest{
+    string productid = 1;
+}
+
+message DeleteProductResponse {
+    int64 status = 1;
+    string error = 2;
 }
 
 message DeleteFoodTypeRequest{
