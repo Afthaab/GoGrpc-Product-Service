@@ -35,6 +35,7 @@ type ProductManagementClient interface {
 	AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*AddProductResponse, error)
 	ViewProduct(ctx context.Context, in *ViewProductRequest, opts ...grpc.CallOption) (*ViewProductResponse, error)
 	ViewProductById(ctx context.Context, in *ViewProductByIdRequest, opts ...grpc.CallOption) (*ViewProductByIdResponse, error)
+	DeleteProduct(ctx context.Context, in *DeleteProductRequest, opts ...grpc.CallOption) (*DeleteProductResponse, error)
 	AddFoodType(ctx context.Context, in *AddFoodTypeRequest, opts ...grpc.CallOption) (*AddFoodTypeResponse, error)
 	ViewFoodType(ctx context.Context, in *ViewFoodtypeRequest, opts ...grpc.CallOption) (*ViewFoodTypeResponse, error)
 	EditFoodType(ctx context.Context, in *EditFoodTypeRequest, opts ...grpc.CallOption) (*EditFoodTypeResponse, error)
@@ -166,6 +167,15 @@ func (c *productManagementClient) ViewProductById(ctx context.Context, in *ViewP
 	return out, nil
 }
 
+func (c *productManagementClient) DeleteProduct(ctx context.Context, in *DeleteProductRequest, opts ...grpc.CallOption) (*DeleteProductResponse, error) {
+	out := new(DeleteProductResponse)
+	err := c.cc.Invoke(ctx, "/products.ProductManagement/DeleteProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *productManagementClient) AddFoodType(ctx context.Context, in *AddFoodTypeRequest, opts ...grpc.CallOption) (*AddFoodTypeResponse, error) {
 	out := new(AddFoodTypeResponse)
 	err := c.cc.Invoke(ctx, "/products.ProductManagement/AddFoodType", in, out, opts...)
@@ -219,6 +229,7 @@ type ProductManagementServer interface {
 	AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error)
 	ViewProduct(context.Context, *ViewProductRequest) (*ViewProductResponse, error)
 	ViewProductById(context.Context, *ViewProductByIdRequest) (*ViewProductByIdResponse, error)
+	DeleteProduct(context.Context, *DeleteProductRequest) (*DeleteProductResponse, error)
 	AddFoodType(context.Context, *AddFoodTypeRequest) (*AddFoodTypeResponse, error)
 	ViewFoodType(context.Context, *ViewFoodtypeRequest) (*ViewFoodTypeResponse, error)
 	EditFoodType(context.Context, *EditFoodTypeRequest) (*EditFoodTypeResponse, error)
@@ -268,6 +279,9 @@ func (UnimplementedProductManagementServer) ViewProduct(context.Context, *ViewPr
 }
 func (UnimplementedProductManagementServer) ViewProductById(context.Context, *ViewProductByIdRequest) (*ViewProductByIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ViewProductById not implemented")
+}
+func (UnimplementedProductManagementServer) DeleteProduct(context.Context, *DeleteProductRequest) (*DeleteProductResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteProduct not implemented")
 }
 func (UnimplementedProductManagementServer) AddFoodType(context.Context, *AddFoodTypeRequest) (*AddFoodTypeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddFoodType not implemented")
@@ -528,6 +542,24 @@ func _ProductManagement_ViewProductById_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ProductManagement_DeleteProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductManagementServer).DeleteProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/products.ProductManagement/DeleteProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductManagementServer).DeleteProduct(ctx, req.(*DeleteProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ProductManagement_AddFoodType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddFoodTypeRequest)
 	if err := dec(in); err != nil {
@@ -658,6 +690,10 @@ var ProductManagement_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ViewProductById",
 			Handler:    _ProductManagement_ViewProductById_Handler,
+		},
+		{
+			MethodName: "DeleteProduct",
+			Handler:    _ProductManagement_DeleteProduct_Handler,
 		},
 		{
 			MethodName: "AddFoodType",

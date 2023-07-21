@@ -342,6 +342,20 @@ func (r *userDataBase) DeleteFoodType(ctx context.Context, typeData domain.Foodt
 	return err
 }
 
+func (r *userDataBase) DeleteProduct(ctx context.Context, productData domain.Products) error {
+	collection := r.DB.Collection("products")
+
+	objID, err := primitive.ObjectIDFromHex(productData.ID)
+	if err != nil {
+		return err
+	}
+
+	filter := bson.M{"_id": objID}
+
+	_, err = collection.DeleteOne(ctx, filter)
+	return err
+}
+
 func NewProductRepo(db *mongo.Database) interfaces.ProductRepository {
 	return &userDataBase{
 		DB: db,

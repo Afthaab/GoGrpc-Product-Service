@@ -165,6 +165,14 @@ func (u *productUseCase) DeleteFoodType(ctx context.Context, typeData domain.Foo
 	}
 	return nil
 }
+
+func (u *productUseCase) DeleteProduct(ctx context.Context, productData domain.Products) error {
+	err := u.Repo.DeleteProduct(ctx, productData)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 func NewProductUseCase(repo interfaces.ProductRepository) service.ProductUseCase {
 	return &productUseCase{
 		Repo: repo,
