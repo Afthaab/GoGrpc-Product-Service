@@ -124,6 +124,7 @@ message ViewProductByIdResponse{
     string typename  = 8;
     repeated AddSizeBazedPrizeRequest sizeandprice = 9;
     repeated string imagelink = 10;
+    float baseprice = 11;
 }
 
 message ViewFoodtypeRequest{}

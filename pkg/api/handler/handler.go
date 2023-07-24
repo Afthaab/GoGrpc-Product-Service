@@ -294,6 +294,7 @@ func (h *ProductHandler) ViewProductById(ctx context.Context, req *pb.ViewProduc
 		Categoryname: categoryData.Categoryname,
 		Typename:     typeData.Foodtype,
 		Sizeandprice: sizes,
+		Baseprice:    float32(productData.Baseprice),
 		Availibilty:  productData.Availibility,
 		Imagelink:    productData.Imageurls,
 	}, nil
